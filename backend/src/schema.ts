@@ -5,6 +5,8 @@ export const typeDefs = gql`
     id: ID!
     category: String!
     brand: String!
+    quantity: Int!
+    price: Float!
     amount: Float!
   }
 
@@ -14,6 +16,11 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    addSale(category: String!, brand: String!, amount: Float!): Sale
+    addSale(
+      category: String!, 
+      brand: String!, 
+      quantity: Int!, 
+      price: Float!
+    ): Sale
   }
 `;

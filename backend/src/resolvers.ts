@@ -23,21 +23,36 @@ export const resolvers = {
 
     totalSalesByCategory: async (_: any, { category }: any) => {
       const snapshot = await db
-        .collection("sales")
-        .where("category", "==", category)
-        .get();
+          .collection("sales")
+          .where("category", "==", category)
+          .get();
 
       return snapshot.docs.reduce(
-        (sum: number, doc: any) => sum + doc.data().amount,
-        0
+          (sum: number, doc: any) => sum + (doc.data().amount || 0),
+          0
       );
     }
   },
 
   Mutation: {
-    addSale: async (_: any, args: any) => {
-      const ref = await db.collection("sales").add(args);
-      return { id: ref.id, ...args };
+    addSale: async (_: any, { category, brand, quantity, price }: any) => {
+      const amount = quantity * price;
+
+      const newSaleData = {
+        category,
+        brand,
+        quantity,
+        price,
+        amount,
+        createdAt: new Date().toISOString() // Opcional: para ordenar por fecha
+      };
+
+      const ref = await db.collection("sales").add(newSaleData);
+
+      return {
+        id: ref.id,
+        ...newSaleData
+      };
     }
   }
 };
