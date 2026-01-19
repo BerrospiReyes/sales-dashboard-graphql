@@ -8,10 +8,11 @@ export const typeDefs = gql`
     quantity: Int!
     price: Float!
     amount: Float!
+    month: String!
   }
 
   type Query {
-    sales(category: String, brand: String): [Sale]
+    sales(category: String, brand: String, month: String): [Sale]
     totalSalesByCategory(category: String!): Float
   }
 
@@ -20,7 +21,8 @@ export const typeDefs = gql`
       category: String!, 
       brand: String!, 
       quantity: Int!, 
-      price: Float!
+      price: Float!,
+      month: String!
     ): Sale
   }
 `;
