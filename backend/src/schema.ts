@@ -5,24 +5,27 @@ export const typeDefs = gql`
     id: ID!
     category: String!
     brand: String!
-    quantity: Int!
+    quantity: Float!
     price: Float!
     amount: Float!
     month: String!
+    goalQty: Float!
+    goalAmt: Float!
   }
 
   type Query {
-    sales(category: String, brand: String, month: String): [Sale]
-    totalSalesByCategory(category: String!): Float
+    sales(category: String, brand: String): [Sale]
   }
 
   type Mutation {
     addSale(
       category: String!, 
       brand: String!, 
-      quantity: Int!, 
-      price: Float!,
-      month: String!
+      quantity: Float, 
+      price: Float, 
+      month: String!,
+      goalQty: Float,
+      goalAmt: Float
     ): Sale
   }
 `;
